@@ -1,0 +1,6 @@
+/.idea/
+/var/
+/vendor/
+/.env.local
+.phpunit.result.cache
+clover.xml

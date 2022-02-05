@@ -1,0 +1,19 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  coverage: xdebug
+            - uses: ramsey/composer-install@v2
+            - name: 🧪 Tests
+              run: vendor/bin/phpunit  --coverage-clover clover.xml
+            - uses: codecov/codecov-action@v2
+              with:
+                  files: ./clover.xml

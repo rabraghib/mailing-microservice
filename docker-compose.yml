@@ -1,0 +1,29 @@
+version: '3.9'
+volumes:
+    logs-cache:
+    db-data:
+services:
+    app:
+        container_name: mailing-microservice-app
+        restart: on-failure
+        build:
+            context: .
+        environment:
+            LOGGING_PATH: "php://stdout"
+        ports:
+            - "8080:8080"
+        volumes:
+            - .:/var/www
+            - logs-cache:/var/www/var
+        depends_on:
+            - database
+    database:
+        container_name: mailing-microservice-database
+        image: postgres:14.1-alpine
+        restart: on-failure
+        volumes:
+            - db-data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: db_user
+            POSTGRES_PASSWORD: db_password
+            POSTGRES_DB: db_name
