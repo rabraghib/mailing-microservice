@@ -2,8 +2,7 @@
     "name": "rabraghib/mailing-microservice",
     "type": "project",
     "license": "MIT",
-    "scripts": {
-    },
+    "scripts": {},
     "authors": [
         {
             "name": "Rabyâ Raghib",
