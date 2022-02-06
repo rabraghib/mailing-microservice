@@ -3,28 +3,54 @@
 Solution for [Moroccan PHPers](https://www.facebook.com/groups/moroccanphpers/)'s February 2022 Challenge by ***Rabyâ Raghib (<rabraghib@gmail.com>)***.
 
 It mainly consists of:
-- a php app that provides the 2 endpoints (`/status/{id}`,`/send`) and handles the webhook calls in `/status-webhook`
-- a worker for submitting emails for delivery taking in consideration prioritization
+- a php app that provides 3 endpoints
+  - `POST /send`: request sending an email. It expects a payload like:
+    ```
+    {
+        "sender": "sender@exemple.com", // the email address of the sender.
+        "recipient": "recipient@exemple.com", // the email address of the receiver.
+        "message": "Hello World!", // email body as HTML format.
+        "priority": 4 // oprtional, default to 0
+    }
+    ```
+  - `GET /status/{id}`: get the status of request with id `{id}`, the response:
+    ```
+    {
+        "request_id": "24E69C73-D9D6-7B93-77F3-82D7968E8DED",
+        "status": "processing",
+        "priority": 3
+    }
+    ```
+  - `POST /status-webhook`: to handle webhook calls it expect:
+    ```
+    {
+        "ID": "The id we sent in the first request",
+        "STATUS": "DELIVERED" | "REJECTED" | "FAILED"
+    }
+    ```
+- a worker for submitting emails (that failed submitting in the `/send` request) for delivery taking in consideration prioritization
+
+  Its background job that keep checking & submitting queued emails every `$WORKER_PERIOD_SECONDS` or can also run only once and exit. See [Project setup](#project-setup) Section.
 
 ## Architecture diagram:
-<img width="1297" alt="Architecture Diagram" src="https://user-images.githubusercontent.com/49442862/152660059-60c7a2c9-fcdd-476b-84af-d746ee457a9c.png">
+<img width="1284" alt="Architecture Diagram" src="https://user-images.githubusercontent.com/49442862/152674921-3f7cfa4a-8fdd-4b62-b91f-2cb8db4b0eb4.png">
 
 ## Project setup:
 *Please ensure you set the env variables before running the project. either in `.env`, `.env.local` (not committed) or via system environment variables*
 ```shell
-# run both app & worker
+# run both app & worker services
 docker-compose up -d
 ```
 or instead you can run just the app via:
 ```shell
-docker-compose run app
+docker-compose up -d app-service
 ```
 you can try submitting queued emails via the worker with:
 ```shell
-# Submit all queued emails and exist
-docker-compose run worker
 # To keep checking & submitting queued emails every $WORKER_PERIOD_SECONDS
-docker-compose run worker --serve
+docker-compose run worker-service 
+# Submit all current queued emails and exist
+docker-compose run worker-service --serve=false
 ```
 
 ## Assumptions:
@@ -35,5 +61,7 @@ List of assumptions if you had to take any.
 
 ## Improvements:
 What would you have added if you had more time.
-- [ ] Implement prioritizing logic ([#2](https://github.com/rabraghib/mailing-microservice/issues/2))
-- [ ] Write some unit tests for each endpoint ([#3](https://github.com/rabraghib/mailing-microservice/issues/2))
+- [X] Implement prioritizing logic ([#2](https://github.com/rabraghib/mailing-microservice/issues/2))
+- [ ] Write some unit tests for each endpoint ([#3](https://github.com/rabraghib/mailing-microservice/issues/3))
+- [ ] GitHub action workflows for tests and release ([#6](https://github.com/rabraghib/mailing-microservice/issues/6))
+- [ ] Add endpoint `PATCH /send` to add ability to update not submitted emails ([#7](https://github.com/rabraghib/mailing-microservice/issues/7))
