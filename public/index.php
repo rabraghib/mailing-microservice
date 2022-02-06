@@ -14,4 +14,4 @@ $kernel = new Kernel(SlimAppCallback: function (App $app) {
     $app->post('/status-webhook', StatusWebhookController::class);
 });
 
-$kernel->RunApp();
+$kernel->runApp();

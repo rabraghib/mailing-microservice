@@ -10,6 +10,7 @@ It mainly consists of:
 <img width="1297" alt="Architecture Diagram" src="https://user-images.githubusercontent.com/49442862/152660059-60c7a2c9-fcdd-476b-84af-d746ee457a9c.png">
 
 ## Project setup:
+*Please ensure you set the env variables before running the project. either in `.env`, `.env.local` (not committed) or via system environment variables*
 ```shell
 # run both app & worker
 docker-compose up -d
@@ -22,8 +23,8 @@ you can try submitting queued emails via the worker with:
 ```shell
 # Submit all queued emails and exist
 docker-compose run worker
-# To keep checking & submitting for queued emails every $WORKER_PERIOD_SECONDS
-docker-compose run worker serve
+# To keep checking & submitting queued emails every $WORKER_PERIOD_SECONDS
+docker-compose run worker --serve
 ```
 
 ## Assumptions:
@@ -35,4 +36,4 @@ List of assumptions if you had to take any.
 ## Improvements:
 What would you have added if you had more time.
 - [ ] Implement prioritizing logic ([#2](https://github.com/rabraghib/mailing-microservice/issues/2))
-- [ ] Write some unit tests for each endpoint
+- [ ] Write some unit tests for each endpoint ([#3](https://github.com/rabraghib/mailing-microservice/issues/2))
