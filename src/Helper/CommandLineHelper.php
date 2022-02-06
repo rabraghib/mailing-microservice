@@ -6,8 +6,8 @@ use Codedungeon\PHPCliColors\Color;
 
 class CommandLineHelper
 {
-    const DASH_SEPARATOR = '------------------------------------------------------------------------------';
-    const CLEAR_LINE = '\033[2K\r';
+    const DASH_SEPARATOR = "------------------------------------------------------------------------------";
+    const CLEAR_LINE = "\033[2K\r";
 
     public static function logColored(string $msg, string $colorAnsi, bool $newLine = true) {
         echo $colorAnsi, $msg, Color::RESET;

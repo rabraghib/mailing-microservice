@@ -42,9 +42,9 @@ class Kernel
         }
     }
 
-    public function runApp()
+    public function getApp(): App
     {
-        $this->app->run();
+        return $this->app;
     }
 
     #[NoReturn] public function runWorker(bool $isServeMode, bool $initialCall = true)
