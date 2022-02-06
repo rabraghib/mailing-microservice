@@ -73,7 +73,7 @@ class Kernel
             $mailRequests = $repository->findBy([
                 'isSubmitted' => false
             ],[
-                // TODO 'priority' => ''
+                'priority' => 'DESC'
             ]);
         } catch(Exception $e){
             CLI::logError('Error: '.$e->getMessage());
@@ -120,7 +120,8 @@ class Kernel
     protected function buildContainer(): Container
     {
         $containerBuilder = new ContainerBuilder();
-//        $containerBuilder->enableCompilation(__DIR__ . '/../var/cache');
+        // TODO: fix why this is causing error
+        // $containerBuilder->enableCompilation(__DIR__ . '/../var/cache');
         $containerBuilder->addDefinitions([
             ConfigInterface::class => ContainerDefinitions::getAppConfigs(),
             LoggerInterface::class => ContainerDefinitions::getLoggerDefinition(),

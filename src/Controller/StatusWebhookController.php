@@ -20,6 +20,10 @@ class StatusWebhookController extends Controller
         if ($mailRequest === null) {
             $this->logger->error("webhook received for no existing mail request with id \"$requestId\"");
         } else {
+            if (!$mailRequest->isSubmitted()) {
+                $this->logger->notice("isSubmitted field has an incorrect value for mail request with id \"$requestId\"");
+                $mailRequest->setIsSubmitted(true);
+            }
             $mailRequest->setStatus(
                 $status === 'DELIVERED' ? MailRequestStatus::SENT : MailRequestStatus::FAILED
             );

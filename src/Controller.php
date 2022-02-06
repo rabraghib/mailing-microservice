@@ -56,8 +56,8 @@ abstract class Controller {
     {
         $errors = [];
         foreach ($validators as $field => $validator) {
-            $dataValue = array_key_exists($field,$data) ? $data[$field] : '';
-            if($allowBlank || !v::notBlank()->validate($dataValue)){
+            $dataValue = array_key_exists($field,$data) ? $data[$field] : null;
+            if(!$allowBlank && !v::notBlank()->validate($dataValue)){
                 $errors[$field] = "missing $field field.";
             } elseif (!$validator->validate($dataValue)){
                 $errors[$field] = "\"${dataValue}\" is an invalid value.";

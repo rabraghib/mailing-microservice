@@ -13,10 +13,11 @@ class SendEmailController extends Controller
     {
         $data = $this->getParsedBodyData();
         $errors = $this->validateData($data, [
-            "sender" => v::stringType()->email()->length(1,255),
-            "recipient" => v::stringType()->email()->length(1,255),
-            "message" => v::stringType()
-        ]);
+            "sender" => v::stringType()->notBlank()->email()->length(1,255),
+            "recipient" => v::stringType()->notBlank()->email()->length(1,255),
+            "message" => v::stringType()->notBlank(),
+            "priority" => v::nullable(v::number()),
+        ],true);
         if (count($errors) > 0){
             return $this->respond(400, [
                 "status" => "denied",
@@ -28,7 +29,8 @@ class SendEmailController extends Controller
             ->setId($requestId)
             ->setSender($data['sender'])
             ->setRecipient($data['recipient'])
-            ->setMessage($data['message']);
+            ->setMessage($data['message'])
+            ->setPriority($data['priority'] ?? 0);
 
         try {
             $isAccepted = $this->mailer->send($mailRequest);

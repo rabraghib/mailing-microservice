@@ -28,6 +28,9 @@ class MailRequest
     #[ORM\Column(type: "string", length: 255)]
     private string $status = 'processing';
 
+    #[ORM\Column(type: "integer")]
+    private int $priority = 0;
+
     public function getId(): string
     {
         return $this->id;
@@ -91,6 +94,17 @@ class MailRequest
     public function setStatus(string $status): self
     {
         $this->status = $status;
+        return $this;
+    }
+
+    public function getPriority(): int
+    {
+        return $this->priority;
+    }
+
+    public function setPriority(int $priority): self
+    {
+        $this->priority = $priority;
         return $this;
     }
 }

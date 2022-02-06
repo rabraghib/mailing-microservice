@@ -33,9 +33,9 @@ class ErrorHandlerController
         ];
         $response = new Response($statusCode);
         $response->getBody()->write(
-            (string) json_encode($payload, JSON_UNESCAPED_UNICODE)
+            (string) json_encode($payload, JSON_PRETTY_PRINT)
         );
-        return $response;
+        return $response->withHeader('Content-Type', 'application/json');
     }
 
     protected function determineStatusCode(string $method, $exception): int

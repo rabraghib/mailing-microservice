@@ -21,6 +21,7 @@ class StatusController extends Controller
             data: [
                 'request_id' => $request->getId(),
                 'status' => $request->getStatus(),
+                'priority' => $request->getPriority()
             ]
         );
     }
