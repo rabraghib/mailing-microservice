@@ -1,3 +1,12 @@
+## [1.0.2](https://github.com/rabraghib/mailing-microservice/compare/v1.0.1...v1.0.2) (2022-02-07)
+
+
+### Bug Fixes
+
+* typo in worker output ([d11d8a3](https://github.com/rabraghib/mailing-microservice/commit/d11d8a3eed4ae909669cc53a32169d5ecfd8c02c))
+
+
+
 ## [1.0.1](https://github.com/rabraghib/mailing-microservice/compare/v1.0.0...v1.0.1) (2022-02-07)
 
 
