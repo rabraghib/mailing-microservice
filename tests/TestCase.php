@@ -23,8 +23,8 @@ class TestCase extends PHPUnit_TestCase
     }
     protected function tearDown(): void
     {
-        $this->getEntityManager()
-            ->getConnection()->rollback();
+//        $this->getEntityManager()
+//            ->getConnection()->rollback();
     }
 
     protected function getEntityManager(): EntityManagerInterface

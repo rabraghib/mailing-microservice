@@ -2,7 +2,11 @@
     "name": "rabraghib/mailing-microservice",
     "type": "project",
     "license": "MIT",
-    "scripts": {},
+    "scripts": {
+        "migrations:generate": "doctrine-migrations diff",
+        "migrations:migrate": "doctrine-migrations migrate",
+        "tests": "phpunit --coverage-clover clover.xml"
+    },
     "authors": [
         {
             "name": "Rabyâ Raghib",

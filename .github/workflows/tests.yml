@@ -9,6 +9,20 @@ on:
 jobs:
     tests:
         runs-on: ubuntu-latest
+        services:
+            database:
+                image: postgres:14.1-alpine
+                env:
+                    POSTGRES_USER: db_user
+                    POSTGRES_PASSWORD: db_password
+                    POSTGRES_DB: db_name
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+                ports:
+                    - 5432:5432
         steps:
             - uses: actions/checkout@v2
             - uses: shivammathur/setup-php@v2
@@ -16,8 +30,9 @@ jobs:
                   php-version: 8.1
                   coverage: xdebug
             - uses: ramsey/composer-install@v2
+            - run: composer run-script migrations:migrate
             - name: 🧪 Tests
-              run: docker-compose run app ./vendor/bin/phpunit  --coverage-clover clover.xml
+              run: composer run-script tests
             - uses: codecov/codecov-action@v2
               with:
                   files: ./clover.xml
