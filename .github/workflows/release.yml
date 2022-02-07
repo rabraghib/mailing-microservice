@@ -11,24 +11,23 @@ jobs:
             skipped: ${{ steps.changelog.outputs.skipped }}
         steps:
             - uses: actions/checkout@v2
-            - name: conventional Changelog Action
+            - name: Conventional Changelog Action
               id: changelog
               uses: TriPSs/conventional-changelog-action@v3.7.1
               with:
-                  github-token: ${{ secrets.CHANGELOG_RELEASE }}
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
                   version-file: './composer.json'
-            - name: create release
-              uses: actions/create-release@v1
+            - uses: actions/create-release@v1
               if: ${{ steps.changelog.outputs.skipped == 'false' }}
               env:
-                  GITHUB_TOKEN: ${{ secrets.CHANGELOG_RELEASE }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                   tag_name: ${{ steps.changelog.outputs.tag }}
                   release_name: ${{ steps.changelog.outputs.tag }}
                   body: ${{ steps.changelog.outputs.clean_changelog }}
     docker-build-push:
         needs: changelog
-        if: ${{ !needs.changelog.outputs.skipped }}
+        if: ${{ needs.changelog.outputs.skipped == 'false' }}
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -39,7 +38,7 @@ jobs:
                   images: |
                       ghcr.io/rabraghib/mailing-microservice
                   flavor: |
-                      latest
+                      latest=true
                   tags: |
                       type=sha
                       type=ref,event=branch
