@@ -93,12 +93,13 @@ class Kernel
                 // Don't throw error and retry in the next run
             }
         }
+        $em->flush();
         if ($acceptedCount > 0){
             CLI::logSuccess("${acceptedCount} email successfully submitted for delivery!");
         }
         if ($totalCount > $acceptedCount) {
             $failedCount = $totalCount - $acceptedCount;
-            CLI::logInfo("The ${failedCount} failed submitting emails will say in the que for the next run.");
+            CLI::logInfo("${failedCount} email failed submitting! will stay in the que for the next run.");
         }
         CLI::logColored(CLI::DASH_SEPARATOR,Color::CYAN);
         echo PHP_EOL;

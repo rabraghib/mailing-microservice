@@ -27,7 +27,6 @@ class StatusWebhookController extends Controller
             $mailRequest->setStatus(
                 $status === 'DELIVERED' ? MailRequestStatus::SENT : MailRequestStatus::FAILED
             );
-            $this->entityManager->persist($mailRequest);
             $this->entityManager->flush();
         }
 
