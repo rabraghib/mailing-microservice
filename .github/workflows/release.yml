@@ -1,0 +1,64 @@
+name: Releases
+on:
+    push:
+        branches:
+            - main
+jobs:
+    changelog:
+        runs-on: ubuntu-latest
+        outputs:
+            version: ${{ steps.changelog.outputs.version }}
+            skipped: ${{ steps.changelog.outputs.skipped }}
+        steps:
+            - uses: actions/checkout@v2
+            - name: conventional Changelog Action
+              id: changelog
+              uses: TriPSs/conventional-changelog-action@v3.7.1
+              with:
+                  github-token: ${{ secrets.CHANGELOG_RELEASE }}
+                  version-file: './composer.json'
+            - name: create release
+              uses: actions/create-release@v1
+              if: ${{ steps.changelog.outputs.skipped == 'false' }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.CHANGELOG_RELEASE }}
+              with:
+                  tag_name: ${{ steps.changelog.outputs.tag }}
+                  release_name: ${{ steps.changelog.outputs.tag }}
+                  body: ${{ steps.changelog.outputs.clean_changelog }}
+    docker-build-push:
+        needs: changelog
+        if: ${{ !needs.changelog.outputs.skipped }}
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: docker/setup-buildx-action@v1
+            - uses: docker/metadata-action@v3
+              id: meta
+              with:
+                  images: |
+                      ghcr.io/rabraghib/mailing-microservice
+                  flavor: |
+                      latest
+                  tags: |
+                      type=sha
+                      type=ref,event=branch
+                      type=semver,pattern={{version}},value=${{ needs.changelog.outputs.version }}
+                      type=semver,pattern={{major}}.{{minor}},value=${{ needs.changelog.outputs.version }}
+                      type=semver,pattern={{major}},value=${{ needs.changelog.outputs.version }}
+            - name: Login to Github Packages
+              uses: docker/login-action@v1
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+            - name: Build image and push to Docker Hub and GitHub Container Registry
+              uses: docker/build-push-action@v2
+              with:
+                  context: .
+                  build-args: |
+                      APP_ENV=prod
+                  target: app
+                  push: ${{ github.event_name != 'pull_request' }}
+                  tags: ${{ steps.meta.outputs.tags }}
+                  labels: ${{ steps.meta.outputs.labels }}
