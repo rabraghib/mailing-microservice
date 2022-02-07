@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "migrations:generate": "doctrine-migrations diff",
-    "migrations:migrate": "doctrine-migrations migrate",
+    "migrations:migrate": "doctrine-migrations migrate --no-interaction",
     "tests": "phpunit --coverage-clover clover.xml"
   },
   "authors": [

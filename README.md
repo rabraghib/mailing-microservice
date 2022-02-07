@@ -60,7 +60,7 @@ docker-compose up -d nginx
 you can try submitting queued emails via the worker with:
 ```shell
 # To keep checking & submitting queued emails every $WORKER_PERIOD_SECONDS
-docker-compose run worker-service 
+docker-compose up -d worker-service 
 # Submit all current queued emails and exist
 docker-compose run worker-service " " # clearing default CMD (--serve)
 ```
@@ -74,6 +74,6 @@ List of assumptions if you had to take any.
 ## Improvements:
 What would you have added if you had more time.
 - [X] Implement prioritizing logic ([#2](https://github.com/rabraghib/mailing-microservice/issues/2))
-- [ ] Write some unit tests for each endpoint ([#3](https://github.com/rabraghib/mailing-microservice/issues/3))
+- [X] Write some unit tests for each endpoint ([#3](https://github.com/rabraghib/mailing-microservice/issues/3))
 - [X] GitHub action workflows for tests and release ([#6](https://github.com/rabraghib/mailing-microservice/issues/6))
-- [ ] Add endpoint `PATCH /send` to add ability to update not submitted emails ([#7](https://github.com/rabraghib/mailing-microservice/issues/7))
+- [ ] Add endpoint `PATCH /que-emails/{id}` to add ability to update not submitted emails ([#7](https://github.com/rabraghib/mailing-microservice/issues/7))

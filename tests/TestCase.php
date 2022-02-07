@@ -5,6 +5,7 @@ namespace App\Tests;
 use App\Entity\MailRequest;
 use App\Kernel;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
 use Exception;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use PHPUnit\Framework\TestCase as PHPUnit_TestCase;
@@ -18,13 +19,13 @@ class TestCase extends PHPUnit_TestCase
 {
     protected function setUp(): void
     {
-        $this->getEntityManager()
-            ->getConnection()->beginTransaction();
-    }
-    protected function tearDown(): void
-    {
-//        $this->getEntityManager()
-//            ->getConnection()->rollback();
+        $em = $this->getEntityManager();
+        $tool = new SchemaTool($em);
+        $classes = [
+            $em->getClassMetadata(MailRequest::class)
+        ];
+        $tool->dropSchema($classes);
+        $tool->createSchema($classes);
     }
 
     protected function getEntityManager(): EntityManagerInterface
@@ -71,7 +72,6 @@ class TestCase extends PHPUnit_TestCase
         foreach ($headers as $name => $value) {
             $h->addHeader($name, $value);
         }
-
         return new SlimRequest($method, $uri, $h, $cookies, $serverParams, $stream);
     }
 }
