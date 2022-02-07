@@ -1,0 +1,14 @@
+# Dev environment overrides
+services:
+    app-service:
+        build:
+            args:
+                - APP_ENV=dev
+        user: www-data
+        environment:
+            APP_ENV: dev
+            APP_DEBUG: 1
+            LOGGING_PATH: "php://stdout"
+        volumes:
+            - .:/var/www
+            - logs-cache:/var/www/var

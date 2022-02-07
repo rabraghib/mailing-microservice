@@ -1,0 +1,21 @@
+/.idea/
+/var/
+/vendor/
+/.env.local
+.phpunit.result.cache
+clover.xml
+
+# Other files
+**/docker-compose.yml
+**/*.log
+**/*.md
+**/._*
+**/.dockerignore
+**/.DS_Store
+**/.git/
+**/.gitattributes
+**/.gitignore
+**/.gitmodules
+**/Dockerfile
+**/Thumbs.db
+.editorconfig
