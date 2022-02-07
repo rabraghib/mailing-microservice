@@ -2,8 +2,6 @@
 
 namespace App\Tests;
 
-use Doctrine\ORM\EntityManagerInterface;
-
 class StatusTest extends TestCase
 {
     public function testNotFound(): void
