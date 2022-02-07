@@ -99,7 +99,7 @@ class Kernel
         }
         if ($totalCount > $acceptedCount) {
             $failedCount = $totalCount - $acceptedCount;
-            CLI::logInfo("${failedCount} email failed submitting! will stay in the que for the next run.");
+            CLI::logInfo("${failedCount} email failed submitting!They will stay queued for the next run.");
         }
         CLI::logColored(CLI::DASH_SEPARATOR,Color::CYAN);
         echo PHP_EOL;
