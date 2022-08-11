@@ -1,7 +1,7 @@
 {
   "name": "rabraghib/mailing-microservice",
   "type": "project",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "license": "MIT",
   "scripts": {
     "migrations:generate": "doctrine-migrations diff",
