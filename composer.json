@@ -1,7 +1,7 @@
 {
   "name": "rabraghib/mailing-microservice",
   "type": "project",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "license": "MIT",
   "scripts": {
     "migrations:generate": "doctrine-migrations diff",
@@ -32,7 +32,7 @@
     "vlucas/phpdotenv": "^5.4",
     "php-di/php-di": "^6.3",
     "monolog/monolog": "^2.3",
-    "doctrine/dbal": "^3.3",
+    "doctrine/dbal": "^3.4",
     "doctrine/migrations": "^3.4",
     "doctrine/orm": "^2.11",
     "doctrine/annotations": "^1.13",
