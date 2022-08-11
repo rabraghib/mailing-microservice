@@ -12,8 +12,6 @@
     </a>
 </p>
 
-Solution for [Moroccan PHPers](https://www.facebook.com/groups/moroccanphpers/)'s February 2022 Challenge by ***Rabyâ Raghib (<rabraghib@gmail.com>)***.
-
 It mainly consists of:
 - a php app that provides 3 endpoints
   - `POST /send`: request sending an email. It expects a payload like:
