@@ -63,15 +63,3 @@ docker-compose up -d worker-service
 docker-compose run worker-service " " # clearing default CMD (--serve)
 ```
 
-## Assumptions:
-List of assumptions if you had to take any.
-- The webhook call is made via a `POST` request to `/status-webhook`
-- An env variable will be set with the mail delivery service `API_BASE`
-- This is a private api that can be accessed only by trusted (authorized) services
-
-## Improvements:
-What would you have added if you had more time.
-- [X] Implement prioritizing logic ([#2](https://github.com/rabraghib/mailing-microservice/issues/2))
-- [X] Write some unit tests for each endpoint ([#3](https://github.com/rabraghib/mailing-microservice/issues/3))
-- [X] GitHub action workflows for tests and release ([#6](https://github.com/rabraghib/mailing-microservice/issues/6))
-- [ ] Add endpoint `PATCH /que-emails/{id}` to add ability to update not submitted emails ([#7](https://github.com/rabraghib/mailing-microservice/issues/7))
