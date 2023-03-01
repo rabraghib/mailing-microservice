@@ -32,7 +32,7 @@
     "vlucas/phpdotenv": "^5.4",
     "php-di/php-di": "^6.3",
     "monolog/monolog": "^2.3",
-    "doctrine/dbal": "^3.3",
+    "doctrine/dbal": "^3.6",
     "doctrine/migrations": "^3.4",
     "doctrine/orm": "^2.11",
     "doctrine/annotations": "^1.13",
